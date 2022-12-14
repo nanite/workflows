@@ -6,17 +6,17 @@ on:
       use-snapshots:
         description: "Defines if maven should use a snapshot build"
         default: false
-        required: true
+        required: false
         type: boolean
       java-version:
         description: "The java version"
         default: 17
-        required: true
+        required: false
         type: number
       gradle-tasks:
         description: "tasks the gradle action should run"
         default: build
-        required: true
+        required: false
         type: string
     secrets: 
       saps-token: 
