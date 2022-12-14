@@ -1,0 +1,32 @@
+name: Standard Arch Release
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        description: "The java version"
+        default: 17
+        required: true
+        type: number
+      changelog-file:
+        description: "Location of the changelog file"
+        default: "CHANGELOG.md"
+        required: true
+        type: string
+    secrets: 
+      saps-token: 
+        required: true
+
+jobs:
+  release-arch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build & release
+        uses: ./.github/workflows/standard-release.yml
+        with:
+          java-version: ${{ inputs.java-version }}
+          changelog-file: ${{ inputs.changelog-file }}
+          curse-publish-task: "curseforgePublish"
+          release-files: ./+(forge|fabric)/build/libs/*+@(mc+([0-9]).+([0-9]).+([0-9])).jar
+        secrets: inherit
+      

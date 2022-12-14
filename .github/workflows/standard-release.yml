@@ -1,0 +1,48 @@
+name: Standard Release
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        description: "The java version"
+        default: 17
+        required: true
+        type: number
+      changelog-file:
+        description: "Location of the changelog file"
+        default: "CHANGELOG.md"
+        required: true
+        type: string
+      curse-publish-task:
+        description: "The name of the task to run for curseforge to publish, leave empty to not publish to curseforge"
+        default: "curseforge"
+        required: false
+        type: string
+      release-files:
+        description: "The files to include in a github release, this is limited to a single input so get creative with your glob patterns"
+        default: "./build/libs/*.jar"
+        required: false
+        type: string
+    secrets: 
+      saps-token: 
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build & release
+        uses: ./.github/workflows/base-java.yml
+        with:
+          java-version: ${{ inputs.java-version }}
+          use-snapshots: false
+          gradle-tasks: build publish ${{ inputs.curse-publish-task }}
+        secrets: inherit
+      - name: Release to Github
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: "softprops/action-gh-release@v1"
+        with:
+          body_path: ${{ inpouts.changelog-file }}
+          prerelease: false
+          files: |
+            ${{ inputs.release-files }}

@@ -1,0 +1,44 @@
+name: Base Java
+
+on:
+  workflow_call:
+    inputs:
+      use-snapshots:
+        description: "Defines if maven should use a snapshot build"
+        default: false
+        required: true
+        type: boolean
+      java-version:
+        description: "The java version"
+        default: 17
+        required: true
+        type: number
+      gradle-tasks:
+        description: "tasks the gradle action should run"
+        default: build
+        required: true
+        type: string
+    secrets: 
+      saps-token: 
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.head_commit.message, '[ciskip]')
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: ${{ inputs.java-version }}
+      - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
+        uses: gradle/gradle-build-action@v2
+        env:
+          SNAPSHOT: ${{ inputs.use-snapshosts }}
+          SAPS_TOKEN: ${{ secrets.saps-token }}
+        with:
+          arguments: ${{ inputs.gradle-tasks }}
