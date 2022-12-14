@@ -40,3 +40,8 @@ jobs:
           SAPS_TOKEN: ${{ secrets.saps-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: gradle-build-output
+          path: ./**/libs/*.jar

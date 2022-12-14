@@ -28,16 +28,20 @@ on:
         required: true
 
 jobs:
+  build:
+    name: Build & release
+    uses: ./.github/workflows/base-java.yml
+    with:
+      java-version: ${{ inputs.java-version }}
+      use-snapshots: false
+      gradle-tasks: build publish ${{ inputs.curse-publish-task }}
+    secrets: inherit
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Build & release
-        uses: ./.github/workflows/base-java.yml
+      - uses: actions/download-artifact@v3
         with:
-          java-version: ${{ inputs.java-version }}
-          use-snapshots: false
-          gradle-tasks: build publish ${{ inputs.curse-publish-task }}
-        secrets: inherit
+          name: gradle-build-output
       - name: Release to Github
         if: startsWith(github.ref, 'refs/tags/')
         uses: "softprops/action-gh-release@v1"
