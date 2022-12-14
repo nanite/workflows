@@ -6,17 +6,17 @@ on:
       use-snapshots:
         description: "Defines if maven should use a snapshot build"
         default: false
-        required: true
+        required: false
         type: boolean
       java-version:
         description: "The java version"
         default: 17
-        required: true
+        required: false
         type: number
       gradle-tasks:
         description: "tasks the gradle action should run"
         default: build
-        required: true
+        required: false
         type: string
     secrets: 
       saps-token: 
@@ -25,8 +25,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: |
-      !contains(github.event.head_commit.message, '[ciskip]')
     steps:
       - name: Clone project
         uses: actions/checkout@v3
@@ -38,7 +36,12 @@ jobs:
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
         uses: gradle/gradle-build-action@v2
         env:
-          SNAPSHOT: ${{ inputs.use-snapshosts }}
+          SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: gradle-build-output
+          path: ./**/libs/*.jar
