@@ -36,7 +36,7 @@ jobs:
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
         uses: gradle/gradle-build-action@v2
         env:
-          SNAPSHOT: ${{ inputs.use-snapshosts }}
+          SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
