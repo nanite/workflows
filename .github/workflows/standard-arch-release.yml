@@ -13,12 +13,13 @@ on:
         default: "CHANGELOG.md"
         required: false
         type: string
-    secrets: 
-      saps-token: 
+    secrets:
+      saps-token:
         required: false
       nanite-token:
         required: false
-
+      curse-token:
+        required: false
 jobs:
   release-arch:
     name: Build & release
@@ -29,4 +30,3 @@ jobs:
       curse-publish-task: "curseforgePublish"
       release-files: ./+(forge|fabric)/build/libs/*+@(mc+([0-9]).+([0-9]).+([0-9])).jar
     secrets: inherit
-      

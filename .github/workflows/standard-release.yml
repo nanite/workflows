@@ -23,10 +23,12 @@ on:
         default: "./build/libs/*.jar"
         required: false
         type: string
-    secrets: 
-      saps-token: 
+    secrets:
+      saps-token:
         required: false
-      nanite-token: 
+      nanite-token:
+        required: false
+      curse-token:
         required: false
 
 jobs:

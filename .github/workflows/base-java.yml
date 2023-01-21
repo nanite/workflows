@@ -18,10 +18,12 @@ on:
         default: build
         required: false
         type: string
-    secrets: 
-      saps-token: 
+    secrets:
+      saps-token:
         required: false
       nanite-token:
+        required: false
+      curse-token:
         required: false
 
 jobs:
@@ -33,13 +35,15 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
+          distribution: "temurin"
           java-version: ${{ inputs.java-version }}
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
         uses: gradle/gradle-build-action@v2
         env:
           SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
+          NANITE_TOKEN: ${{ secrets.nanite-token }}
+          CURSE_TOKEN: ${{ secrets.curse-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
       - name: Store artifacts
