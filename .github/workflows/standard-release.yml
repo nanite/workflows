@@ -25,7 +25,9 @@ on:
         type: string
     secrets: 
       saps-token: 
-        required: true
+        required: false
+      nanite-token: 
+        required: false
 
 jobs:
   build:
