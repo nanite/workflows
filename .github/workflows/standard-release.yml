@@ -50,7 +50,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: "softprops/action-gh-release@v1"
         with:
-          body_path: ${{ inpouts.changelog-file }}
+          body_path: ${{ inputs.changelog-file }}
           prerelease: false
           files: |
             ${{ inputs.release-files }}
