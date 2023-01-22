@@ -10,7 +10,7 @@ on:
         type: number
       changelog-file:
         description: "Location of the changelog file"
-        default: "CHANGELOG.md"
+        default: "./CHANGELOG.md"
         required: false
         type: string
       curse-publish-task:
