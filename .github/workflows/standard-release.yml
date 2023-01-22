@@ -38,7 +38,7 @@ jobs:
     with:
       java-version: ${{ inputs.java-version }}
       use-snapshots: false
-      gradle-tasks: build
+      gradle-tasks: build publish ${{ inputs.curse-publish-task }}
     secrets: inherit
   release:
     runs-on: ubuntu-latest
