@@ -38,11 +38,11 @@ jobs:
     with:
       java-version: ${{ inputs.java-version }}
       use-snapshots: false
-      gradle-tasks: build publish ${{ inputs.curse-publish-task }}
+      gradle-tasks: build
     secrets: inherit
   release:
     runs-on: ubuntu-latest
-    # needs: [build]
+    needs: [build]
     steps:
       - name: "Check Paths"
         run: ls -lR ./
