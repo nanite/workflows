@@ -6,12 +6,12 @@ on:
       java-version:
         description: "The java version"
         default: 17
-        required: true
+        required: false
         type: number
       changelog-file:
         description: "Location of the changelog file"
         default: "CHANGELOG.md"
-        required: true
+        required: false
         type: string
       curse-publish-task:
         description: "The name of the task to run for curseforge to publish, leave empty to not publish to curseforge"
