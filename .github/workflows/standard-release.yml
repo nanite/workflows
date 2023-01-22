@@ -42,8 +42,10 @@ jobs:
     secrets: inherit
   release:
     runs-on: ubuntu-latest
-    needs: [build]
+    # needs: [build]
     steps:
+      - name: "Check Paths"
+        run: ls -lR ./
       - uses: actions/download-artifact@v3
         with:
           name: gradle-build-output
