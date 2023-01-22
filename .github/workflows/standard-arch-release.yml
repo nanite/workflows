@@ -27,6 +27,6 @@ jobs:
     with:
       java-version: ${{ inputs.java-version }}
       changelog-file: ${{ inputs.changelog-file }}
-      curse-publish-task: "curseforgePublish"
+      curse-publish-task: "curseforge"
       release-files: ./+(forge|fabric)/build/libs/*+@(mc+([0-9]).+([0-9]).+([0-9])).jar
     secrets: inherit
