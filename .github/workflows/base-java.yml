@@ -40,7 +40,7 @@ jobs:
       - name: Fix borked permissions
         run: chmod +x ./gradlew
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.4.2
         env:
           SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
