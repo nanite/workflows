@@ -28,7 +28,13 @@ on:
         required: false
         type: boolean
         description: "If the project should release to github"
-    secrets: inherit
+    secrets:
+      saps-token:
+        required: false
+      nanite-token:
+        required: false
+      curse-token:
+        required: false
 
 jobs:
   build:
