@@ -1,4 +1,4 @@
-name: Standard MMP
+name: Standard MPP
 
 on:
   workflow_call:
