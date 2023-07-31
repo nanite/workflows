@@ -18,13 +18,7 @@ on:
         default: build
         required: false
         type: string
-    secrets:
-      saps-token:
-        required: false
-      nanite-token:
-        required: false
-      curse-token:
-        required: false
+    secrets: inherit
 
 jobs:
   build:
