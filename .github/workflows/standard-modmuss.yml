@@ -1,4 +1,4 @@
-name: Standard Release
+name: Standard MMP
 
 on:
   workflow_call:
