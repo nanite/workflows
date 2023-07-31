@@ -46,6 +46,7 @@ jobs:
           SAPS_TOKEN: ${{ secrets.saps-token }}
           NANITE_TOKEN: ${{ secrets.nanite-token }}
           CURSE_TOKEN: ${{ secrets.curse-token }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
       - name: Store artifacts
