@@ -20,6 +20,9 @@ on:
         required: false
       curse-token:
         required: false
+      modrinth-token: 
+        required: false
+        
 jobs:
   release-arch:
     name: Build & release
