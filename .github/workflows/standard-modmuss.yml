@@ -35,8 +35,6 @@ on:
         required: false
       curse-token:
         required: false
-      github-token:
-        required: false
       modrinth-token: 
         required: false
 
