@@ -22,6 +22,8 @@ on:
         required: false
       modrinth-token: 
         required: false
+      github-token:
+        required: false
         
 jobs:
   release-arch:

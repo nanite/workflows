@@ -27,6 +27,8 @@ on:
         required: false
       modrinth-token: 
         required: false
+      github-token:
+        required: false
 
 jobs:
   build:
@@ -49,6 +51,7 @@ jobs:
           NANITE_TOKEN: ${{ secrets.nanite-token }}
           CURSE_TOKEN: ${{ secrets.curse-token }}
           MODRINTH_TOKEN: ${{ secrets.modrinth-token }}
+          GITHUB_TOKEN: ${{ secrets.github-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
       - name: Store artifacts
