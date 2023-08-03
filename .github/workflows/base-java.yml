@@ -27,6 +27,8 @@ on:
         required: false
       github-token:
         required: false
+      modrinth-token: 
+        required: false
 
 jobs:
   build:
