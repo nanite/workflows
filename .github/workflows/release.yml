@@ -32,5 +32,5 @@ jobs:
     with:
       java-version: ${{ inputs.java-version }}
       use-snapshots: false
-      gradle-tasks: inputs.gradle-tasks
+      gradle-tasks: ${{ inputs.gradle-tasks }}
     secrets: inherit
