@@ -56,10 +56,14 @@ jobs:
           accessKey: ${{ secrets.s3-access-key }}
           secretKey: ${{ secrets.s3-secret-key }}
           bucket: actions-cache
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle.properties') }}-${{ hashFiles('**/settings.gradle') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle.properties') }}-${{ hashFiles('**/settings.gradle*') }}
           path: |
-            .gradle
-            **/.gradle
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ./.gradle/caches
+            ./.gradle/wrapper
+            **/.gradle/caches
+            **/.gradle/wrapper
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Fix borked permissions
@@ -67,9 +71,13 @@ jobs:
       - name: Inject mirror
         if: ${{ inputs.use-mirror == true }}
         run: |
-          ls -la ./
-          echo "allprojects {\n\trepositories {\n\t\tmaven { url "https://maven.saps.dev/mirror" }\n\t}\n}" > ./init.gradle
-          ls -la
+          cat >> ./init.gradle << EOF
+          allprojects {
+            repositories {
+              maven { url "https://maven.saps.dev/mirror" }
+            }
+          }
+          EOF
           cat ./init.gradle
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
         uses: gradle/gradle-build-action@v2
@@ -81,7 +89,7 @@ jobs:
           MODRINTH_TOKEN: ${{ secrets.modrinth-token }}
           GITHUB_TOKEN: ${{ secrets.github-token }}
         with:
-          arguments: ${{ inputs.gradle-tasks }}
+          arguments: ${{ inputs.gradle-tasks }} --no-daemon
           cache-disabled: true # We'll use our own
       - name: Store artifacts
         uses: actions/upload-artifact@v3
