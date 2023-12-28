@@ -18,6 +18,11 @@ on:
         default: build
         required: false
         type: string
+      use-mirror:
+        description: "Injects a mirror maven before everything else"
+        default: true
+        required: false
+        type: boolean
     secrets:
       saps-token:
         required: false
@@ -59,6 +64,12 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Fix borked permissions
         run: chmod +x ./gradlew
+      - name: Inject mirror
+        if: ${{ inputs.use-mirror == true }}
+        run: |
+          echo "allprojects {\n\trepositories {\n\t\tmaven { url "https://maven.saps.dev/mirror" }\n\t}\n}" > $GITHUB_ACTION_PATH/init.gradle
+          ls -la
+          cat $GITHUB_ACTION_PATH/init.gradle
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
         uses: gradle/gradle-build-action@v2
         env:
