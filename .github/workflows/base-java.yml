@@ -60,10 +60,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            ./.gradle/caches
-            ./.gradle/wrapper
-            **/.gradle/caches
-            **/.gradle/wrapper
+            ./.gradle
+            **/.gradle
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Fix borked permissions
