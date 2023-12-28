@@ -29,6 +29,10 @@ on:
         required: false
       github-token:
         required: false
+      s3-access-key:
+        required: true
+      s3-secret-key:
+        required: true
 
 jobs:
   build:
@@ -41,6 +45,18 @@ jobs:
         with:
           distribution: "temurin"
           java-version: ${{ inputs.java-version }}
+      - uses: tespkg/actions-cache@v1
+        with:
+          endpoint: cdn.nanite.dev
+          accessKey: ${{ secrets.s3-access-key }}
+          secretKey: ${{ secrets.s3-secret-key }}
+          bucket: actions-cache
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle.properties') }}-${{ hashFiles('**/settings.gradle') }}
+          path: |
+            .gradle
+            **/.gradle
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Fix borked permissions
         run: chmod +x ./gradlew
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
@@ -54,6 +70,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github-token }}
         with:
           arguments: ${{ inputs.gradle-tasks }}
+          cache-disabled: true # We'll use our own
       - name: Store artifacts
         uses: actions/upload-artifact@v3
         with:
