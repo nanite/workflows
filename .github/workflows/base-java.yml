@@ -67,6 +67,7 @@ jobs:
       - name: Inject mirror
         if: ${{ inputs.use-mirror == true }}
         run: |
+          ls -la $GITHUB_ACTION_PATH
           echo "allprojects {\n\trepositories {\n\t\tmaven { url "https://maven.saps.dev/mirror" }\n\t}\n}" > $GITHUB_ACTION_PATH/init.gradle
           ls -la
           cat $GITHUB_ACTION_PATH/init.gradle
