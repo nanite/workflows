@@ -35,16 +35,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: ${{ inputs.java-version }}
       - name: Fix borked permissions
         run: chmod +x ./gradlew
       - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         env:
           SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
@@ -55,7 +55,7 @@ jobs:
         with:
           arguments: ${{ inputs.gradle-tasks }}
       - name: Store artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gradle-build-output
           path: ./**/libs/*.jar
