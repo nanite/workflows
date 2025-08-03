@@ -53,4 +53,4 @@ jobs:
           CURSE_TOKEN: ${{ secrets.curse-token }}
           MODRINTH_TOKEN: ${{ secrets.modrinth-token }}
           GITHUB_TOKEN: ${{ secrets.github-token }}
-        run: ${{ inputs.gradle-tasks }} --no-daemon
+        run: ./gradlew ${{ inputs.gradle-tasks }} --no-daemon
