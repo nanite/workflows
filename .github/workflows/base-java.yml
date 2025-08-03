@@ -54,8 +54,3 @@ jobs:
           MODRINTH_TOKEN: ${{ secrets.modrinth-token }}
           GITHUB_TOKEN: ${{ secrets.github-token }}
         run: ${{ inputs.gradle-tasks }} --no-daemon
-      - name: Store artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: gradle-build-output
-          path: ./**/libs/*.jar
