@@ -66,19 +66,9 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Fix borked permissions
         run: chmod +x ./gradlew
-      - name: Inject mirror
-        if: ${{ inputs.use-mirror == true }}
-        run: |
-          cat >> ./init.gradle << EOF
-          allprojects {
-            repositories {
-              maven { url "https://maven.saps.dev/mirror" }
-            }
-          }
-          EOF
-          cat ./init.gradle
-      - name: Run gradle tasks [${{ inputs.gradle-tasks }}]
-        uses: gradle/gradle-build-action@v2
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Run gradle tasks [${{ inputs.gradle-tasks }}] 
         env:
           SNAPSHOT: ${{ inputs.use-snapshots }}
           SAPS_TOKEN: ${{ secrets.saps-token }}
@@ -86,9 +76,7 @@ jobs:
           CURSE_TOKEN: ${{ secrets.curse-token }}
           MODRINTH_TOKEN: ${{ secrets.modrinth-token }}
           GITHUB_TOKEN: ${{ secrets.github-token }}
-        with:
-          arguments: ${{ inputs.gradle-tasks }} --no-daemon
-          cache-disabled: true # We'll use our own
+        run: ${{ inputs.gradle-tasks }} --no-daemon
       - name: Store artifacts
         uses: actions/upload-artifact@v3
         with:
